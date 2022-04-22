@@ -68,7 +68,13 @@ ERC 20 token contract is verified. [etherscan link](https://rinkeby.etherscan.io
 
 MyLiquidity contract is deployed at [0x505B5ec5E027ceFbE7C32d1556dfCc23a7bE32cd](https://rinkeby.etherscan.io/address/0x505B5ec5E027ceFbE7C32d1556dfCc23a7bE32cd#code)
 
+# Important Transaction hashes
 
+Add Liquidity :- [0xa795e7040b3803325354aff66fcbda0e79a7ecbfc0b2e7e474df5bb946f71eec](https://rinkeby.etherscan.io/tx/0xa795e7040b3803325354aff66fcbda0e79a7ecbfc0b2e7e474df5bb946f71eec)
+
+swap Tokens :- [0x934a9ca08cdb4be6109952203907cf29805fe681c28eec587cc5f8409e60c5e1](https://rinkeby.etherscan.io/tx/0x934a9ca08cdb4be6109952203907cf29805fe681c28eec587cc5f8409e60c5e1)
+
+Remove Liquidity :- [0xa1f395c2198047fff44aac840406d9dfa0843c626f78fa6df8c51dc4d87ae1a8](https://rinkeby.etherscan.io/tx/0xa1f395c2198047fff44aac840406d9dfa0843c626f78fa6df8c51dc4d87ae1a8)
 
 # To run tests
 
