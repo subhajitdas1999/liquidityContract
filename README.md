@@ -1,13 +1,59 @@
-# liquidityContract 
-This contract uses the router and factory contract of uniswap v2 (rinkeby network)
+# liquidityContract
 
-User need to approve the token amounts to this contract before calling the addLiquidity function.
+This contract uses the router and factory contract of uniswap v2 (rinkeby network), to help user to add liquidity to the pool,
 
-after adding the liquidity user will get some LP tokens ,which will get stored in the contract , user can check it by calling the 
+remove liquidity from the pool , and swap tokens
 
-the liquidityOf function (ex liquidityOf(userAddress,poolAddress), user will get the pool address in event, emitted during addLiquidity func call).
+## Add Liquidity
+```
+function addLiquidity(address tokenA,address tokenB,uint256 amountA,uint256 amountB) external {}
 
-User can remove liquidity by calling the removeLiquidity func along with two token address.
+```
+this func adds liquidity to the pool , if the pool is not exits then it will create a new one
+
+Note :-before calling this function user need to approve the tokens to this contract address (amountA,amountB),that user want add.
+
+tokenA = address of first token
+tokenB = address of second token
+amountA = first token amount
+amountB = second token amount
+
+after executing this func user will get some Lp tokens and the pool address in the event emitted after a successful execution.
+
+the LP token will get stored inside the contract , which user can check with by calling the 
+```
+liquidityOf(ownerAddress,poolAddress)
+
+```
+## Remove Liquidity
+```
+function removeLiquidity(address tokenA, address tokenB) external {}
+
+```
+By calling this function user can remove liquidity , that provided earlier.
+
+tokenA = address of first token
+tokenB = address of second token
+
+Internally this function uses all the LP tokens(for a particular pool) that the user have in this contract.
+
+After successful execution user will get back the tokens.
+
+## Swap Tokens
+
+```
+function swapTokens(address fromToken,address toToken,uint256 tokenAmountForSwap) external {}
+
+```
+By calling this function user is able to swap tokens
+
+fromToken = token address user want to swap
+toToken = token Address user want to get after swap
+tokenAmountForSwap = token amount user want to swap
+
+Note :- User need to approve the tokenAmountForSwap from fromToken to this contract address .
+
+after successful execution of this function user will get the desired tokens. 
 
 # Contract Addresses
 All the contract is deployed at Rinkeby network
@@ -17,8 +63,8 @@ tokenB is deployed at (0xC52329f1e51E09D9a2B5da6426D9f946D6b16079)
 
 ERC 20 token contract is verified. [etherscan link](https://rinkeby.etherscan.io/address/0x1E97446647d94d36e987e5b353Ec66Dd53B476aB#code)
 
-MyLiquidity is deployed at (0xf333956F26aA3549E265e3a5C02E265aF21F1D71)
-MyLiquidity contract is verified .[etherscan link](https://rinkeby.etherscan.io/address/0xf333956F26aA3549E265e3a5C02E265aF21F1D71#code)
+MyLiquidity is deployed at [0x505B5ec5E027ceFbE7C32d1556dfCc23a7bE32cd](https://rinkeby.etherscan.io/address/0x505B5ec5E027ceFbE7C32d1556dfCc23a7bE32cd#code)
+
 
 
 # To run tests
@@ -29,4 +75,8 @@ to run the tests, first enter the all the necessary env details to a .env files 
 
 then from root directory run,
 
- -npx hardhat test
+```
+npx hardhat test
+
+```
+
