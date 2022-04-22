@@ -2,7 +2,7 @@
 
 This contract uses the router and factory contract of uniswap v2 (rinkeby network), to help user to add liquidity to the pool,
 
-remove liquidity from the pool , and swap tokens
+remove liquidity from the pool , and swap tokens.
 
 ## Add Liquidity
 ```
@@ -61,11 +61,12 @@ after successful execution of this function user will get the desired tokens.
 All the contract is deployed at Rinkeby network
 
 tokenA is deployed at (0x1E97446647d94d36e987e5b353Ec66Dd53B476aB)
+
 tokenB is deployed at (0xC52329f1e51E09D9a2B5da6426D9f946D6b16079)
 
 ERC 20 token contract is verified. [etherscan link](https://rinkeby.etherscan.io/address/0x1E97446647d94d36e987e5b353Ec66Dd53B476aB#code)
 
-MyLiquidity is deployed at [0x505B5ec5E027ceFbE7C32d1556dfCc23a7bE32cd](https://rinkeby.etherscan.io/address/0x505B5ec5E027ceFbE7C32d1556dfCc23a7bE32cd#code)
+MyLiquidity contract is deployed at [0x505B5ec5E027ceFbE7C32d1556dfCc23a7bE32cd](https://rinkeby.etherscan.io/address/0x505B5ec5E027ceFbE7C32d1556dfCc23a7bE32cd#code)
 
 
 
@@ -79,6 +80,5 @@ then from root directory run,
 
 ```
 npx hardhat test
-
 ```
 
