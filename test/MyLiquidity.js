@@ -81,39 +81,80 @@ describe("MyLiquidity Contact", () => {
     ).to.emit(myLiquidity, "RemovedLiquidity");
   });
 
-  it("user should receive tokens after removing liquidity",async()=>{
-
+  it("user should receive tokens after removing liquidity", async () => {
     // add liquidity
     await myLiquidity.addLiquidity(
-        tokenA.address,
-        tokenB.address,
-        10000,
-        10000
-      );
-
+      tokenA.address,
+      tokenB.address,
+      10000,
+      10000
+    );
 
     //user tokenA balance before removing liquidity
-    const userTokenABalanceBeforeRemove = await tokenA.balanceOf(deployer.address);
+    const userTokenABalanceBeforeRemove = await tokenA.balanceOf(
+      deployer.address
+    );
 
     //remove liquidity
-    const tx = await myLiquidity.removeLiquidity(tokenA.address, tokenB.address);
+    const tx = await myLiquidity.removeLiquidity(
+      tokenA.address,
+      tokenB.address
+    );
 
     const allEvents = (await tx.wait()).events;
 
-    const RemovedLiquidityEvent = allEvents.find(el => el.event === "RemovedLiquidity");
+    const RemovedLiquidityEvent = allEvents.find(
+      (el) => el.event === "RemovedLiquidity"
+    );
 
-    const [amountTokenA,amountTokenB] = RemovedLiquidityEvent.args;
+    const [amountTokenA, amountTokenB] = RemovedLiquidityEvent.args;
 
     //user tokenA balance after removing liquidity
-    const userTokenABalanceAfterRemove = await tokenA.balanceOf(deployer.address);
+    const userTokenABalanceAfterRemove = await tokenA.balanceOf(
+      deployer.address
+    );
 
     //total balance of user before removing liquidity + amount user get after removing liquidity
-    const userTotalTokenABalance = BigNumber.from(userTokenABalanceBeforeRemove).add(amountTokenA)
+    const userTotalTokenABalance = BigNumber.from(
+      userTokenABalanceBeforeRemove
+    ).add(amountTokenA);
 
     //this userTotalTokenABalance should be equal to user balance after removing liquidity
-    
+
     expect(userTokenABalanceAfterRemove).be.equal(userTotalTokenABalance);
     // console.log(userTokenABalanceBeforeRemove,userTokenABalanceAfterRemove);
+  });
 
-  })
+  it("Should be able to swap tokens", async () => {
+    //add liquidity
+    await myLiquidity.addLiquidity(
+      tokenA.address,
+      tokenB.address,
+      10000,
+      10000
+    );
+
+    //sending tokenA to addr1 (so that addr1 can swap it to get TokenB)
+    //1000 tokenA for swapping
+    await tokenA.transfer(addr1.address, 1000);
+
+    //need to approve the tokenA amount to the myLiquidity contract from addr1 account
+    await tokenA.connect(addr1).approve(myLiquidity.address, 1000);
+
+    // swap tokenA from addr1 to get tokenB    
+    const tx = await myLiquidity.connect(addr1).swapTokens(tokenA.address, tokenB.address, 1000);
+
+    const allEvents = (await tx.wait()).events;
+
+    const tokenSwapEvent = allEvents.find(el => el.event === "TokenSwapped")
+    
+    const [tokenAmountOut,owner] = tokenSwapEvent.args;
+   
+    //tokenB balance of addr1
+    const Addr1TokenBBalance = await tokenB.balanceOf(addr1.address);
+
+    //now the tokenB amount addr1 gets as a result of swapping, should be equal to his tokenB balance    
+    expect(Addr1TokenBBalance).be.equal(tokenAmountOut);
+    
+  });
 });
