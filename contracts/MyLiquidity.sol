@@ -12,10 +12,10 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 /// @custom:experimental This is an experimental contract.
 
 contract MyLiquidity {
-    /// @dev UniswapV2Router02 contract on Rinkeby network
-    address public router = 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D;
-    /// @dev UniswapV2Factory contract on rinkeby network
-    address public factory = 0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f;
+    /// @dev UniswapV2Router02 contract on sepolia network
+    address public router = 0xC532a74256D3Db42D0Bf7a0400fEFDbad7694008;
+    /// @dev UniswapV2Factory contract on sepolia network
+    address public factory = 0x7E0987E5b3a30e3f2828572Bb659A548460a3003;
 
     /// @notice strore the lp tokens of a user
     /// @dev this contract holds all the liquidity of all user
@@ -174,6 +174,23 @@ contract MyLiquidity {
         );
         /// @dev emit the event
         emit TokenSwapped(tokenAmountOut, msg.sender);
+    }
+
+    function getAmountsOut(
+        address tokenA,
+        address tokenB,
+        uint256 tokenAmountForSwap
+    ) external view returns (uint256) {
+        address[] memory path = new address[](2);
+        path[0] = tokenA;
+        path[1] = tokenB;
+
+        uint256 tokenAmountOut = IUniswapV2Router02(router).getAmountsOut(
+            tokenAmountForSwap,
+            path
+        )[1];
+
+        return tokenAmountOut;
     }
 
     /* all events */
