@@ -1,24 +1,21 @@
 require("@nomiclabs/hardhat-waffle");
-require("@nomiclabs/hardhat-etherscan");
+require("@nomicfoundation/hardhat-verify");
 require("dotenv").config({ path: "./.env" });
 /**
  * @type import('hardhat/config').HardhatUserConfig
  */
+console.log();
 module.exports = {
-  solidity: "0.8.13",
+  solidity: "0.8.24",
   networks: {
-    rinkeby: {
-      url: `https://eth-rinkeby.alchemyapi.io/v2/${process.env.ALCHEMY_API_KEY}`,
-      accounts: [process.env.RINKEBY_PRIVATE_KEY],
-    },
-    hardhat: {
-      forking: {
-        url: `https://eth-rinkeby.alchemyapi.io/v2/${process.env.ALCHEMY_API_KEY}`,
-        blockNumber: 10536483, // a specific block number with which you want to work
-      },
+    sepolia: {
+      url: process.env.SEPOLIA_RPC,
+      accounts: [process.env.SEPOLIA_PRIVATE_KEY],
     },
   },
-  etherscan:{
-    apiKey: process.env.ETHERSCAN_API_KEY
-  }
+  etherscan: {
+    apiKey: {
+      sepolia: process.env.ETHERSCAN_API_KEY,
+    },
+  },
 };
